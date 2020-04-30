@@ -22,7 +22,10 @@ module.exports = {
 			title: 'vue demo',
 			template: './index.html'
 		}),
+		new ExtractTextPlugin({ filename: 'styles/root.css', allChunks: false }),
+		new ExtractTextPlugin({ filename: 'styles/[name]/style.css', allChunks: true }),
 		new webpack.HotModuleReplacementPlugin(),
+
 	],
 	module: {
 		rules: [
@@ -67,12 +70,17 @@ module.exports = {
 				loader: 'vue-loader',
 				options: {
 					loaders: {
-
-						'less': [
-							'vue-style-loader',
-							'css-loader',
-							'less-loader'
-						]
+						'css': ExtractTextPlugin.extract({
+							use: 'css-loader',
+							fallback: 'vue-style-loader'
+						}),
+						'less': ExtractTextPlugin.extract({
+							use: [
+								'css-loader',
+								'less-loader'
+							],
+							fallback: 'vue-style-loader',
+						})
 					}
 				}
 			},
