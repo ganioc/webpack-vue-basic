@@ -1,6 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require("extract-text-webpack-plugin")
 
 module.exports = {
 	entry: './src/main.js',
@@ -9,9 +11,18 @@ module.exports = {
 		filename: "js/[name].js"
 
 	},
+	devServer: {
+		contentBase: "./dist"
+	},
 	plugins: [
 		// make sure to include the plugin for the magic
-		new VueLoaderPlugin()
+		new VueLoaderPlugin(),
+		new HtmlWebpackPlugin({
+			filename: 'index.html',
+			title: 'vue demo',
+			template: './index.html'
+		}),
+		new webpack.HotModuleReplacementPlugin(),
 	],
 	module: {
 		rules: [
@@ -28,8 +39,10 @@ module.exports = {
 			{
 				test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
 				loader: 'url-loader',
+				loader: 'file-loader',
 				options: {
-					limit: 1000,
+					esModule: false,
+					limit: 10000,
 					name: 'img/[name].[ext]?[hash]'
 				}
 			},
@@ -54,6 +67,7 @@ module.exports = {
 				loader: 'vue-loader',
 				options: {
 					loaders: {
+
 						'less': [
 							'vue-style-loader',
 							'css-loader',
@@ -71,5 +85,19 @@ module.exports = {
 			'vue$': 'vue/dist/vue.esm.js',
 			'@': path.resolve(__dirname, './src'),
 		}
+	},
+	externals: {
+		'jquery': 'window.jQuery'
 	}
+}
+
+
+if (process.env.NODE_ENV === 'production') {
+	module.exports.plugins = (module.exports.plugins || []).concat([
+		new webpack.DefinePlugin({
+			'process.env': {
+				NODE_ENV: '"production"'
+			}
+		})
+	])
 }

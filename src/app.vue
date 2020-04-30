@@ -8,6 +8,8 @@
 
 <script>
 import Vue from 'vue'
+import $ from 'jquery'
+
 export default {
   name: 'app',
   data() {
@@ -25,7 +27,7 @@ export default {
 <style lang="less">
 #app {
   img {
-    width: 100px;
+    width: 300px;
   }
 }
 </style>
