@@ -25,7 +25,6 @@ module.exports = {
 		new ExtractTextPlugin({ filename: 'styles/root.css', allChunks: false }),
 		new ExtractTextPlugin({ filename: 'styles/[name]/style.css', allChunks: true }),
 		new webpack.HotModuleReplacementPlugin(),
-
 	],
 	module: {
 		rules: [
@@ -106,6 +105,7 @@ if (process.env.NODE_ENV === 'production') {
 			'process.env': {
 				NODE_ENV: '"production"'
 			}
-		})
+		}),
+
 	])
 }
