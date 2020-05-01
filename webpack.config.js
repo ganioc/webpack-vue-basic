@@ -112,7 +112,7 @@ module.exports = {
 
 			}
 		},
-
+		minimizer: [new UglifyJsPlugin()],
 	},
 	devtool: '#eval-source-map',
 }
