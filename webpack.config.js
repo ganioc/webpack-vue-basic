@@ -3,6 +3,8 @@ const webpack = require('webpack');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin")
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+
 
 module.exports = {
 	entry: './src/main.js',
@@ -109,7 +111,8 @@ module.exports = {
 			cacheGroups: { // 这里开始设置缓存的 chunks
 
 			}
-		}
+		},
+
 	},
 	devtool: '#eval-source-map',
 }
