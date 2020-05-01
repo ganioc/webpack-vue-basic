@@ -95,11 +95,29 @@ module.exports = {
 	},
 	externals: {
 		'jquery': 'window.jQuery'
-	}
+	},
+	optimization: {
+		splitChunks: {
+			// include all types of chunks
+			chunks: 'all',
+			minSize: 0, // 最小尺寸，默认0
+			minChunks: 1, // 最小 chunk ，默认1
+			maxAsyncRequests: 1, // 最大异步请求数， 默认1
+			maxInitialRequests: 1, // 最大初始化请求书，默认1
+			name: function () {
+			}, // 名称，此选项可接收 function
+			cacheGroups: { // 这里开始设置缓存的 chunks
+
+			}
+		}
+	},
+	devtool: '#eval-source-map',
 }
 
 
 if (process.env.NODE_ENV === 'production') {
+	module.exports.devtool = '#source-map'
+
 	module.exports.plugins = (module.exports.plugins || []).concat([
 		new webpack.DefinePlugin({
 			'process.env': {
