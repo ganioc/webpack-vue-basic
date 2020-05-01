@@ -112,7 +112,9 @@ module.exports = {
 
 			}
 		},
-		minimizer: [new UglifyJsPlugin()],
+		minimizer: [new UglifyJsPlugin({
+			test: /\.js(\?.*)?$/i,
+		})],
 	},
 	devtool: '#eval-source-map',
 }
